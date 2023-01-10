@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: nuudel-form-submit
+spec:
+  jobTemplate:
+    metadata:
+      name: nuudel-form-submit
+    spec:
+      template:
+        spec:
+          containers:
+            - name: nuudel-form-submit
+              image: registry.access.redhat.com/ubi9
+              command: 
+                - "/usr/local/bin/script.sh"
+              env:
+                - name: NUUDEL_ADMIN_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: nuudel-form-submit-url
+                      key: url
+              volumeMounts:
+                - name: script
+                  mountPath: "/usr/local/bin"
+          restartPolicy: OnFailure
+          volumes:
+            - name: script
+              configmap:
+                name: nuudel-form-submit-script
+                defaultMode: 0755
+  schedule: 0 0 * * 0
