@@ -12,8 +12,11 @@ spec:
           containers:
             - name: nuudel-form-submit
               image: registry.access.redhat.com/ubi9
-              command: 
-                - "/usr/local/bin/script.sh"
+              command:
+                - "/bin/bash"
+              args:
+                - "-c"
+                - "/usr/local/bin/nuudel-form-submit.sh"
               env:
                 - name: NUUDEL_ADMIN_URL
                   valueFrom:
@@ -22,11 +25,11 @@ spec:
                       key: url
               volumeMounts:
                 - name: script
-                  mountPath: "/usr/local/bin"
+                  mountPath: /usr/local/bin
           restartPolicy: OnFailure
           volumes:
-            - name: script
-              configmap:
-                name: nuudel-form-submit-script
+            - configMap:
                 defaultMode: 0755
+                name: nuudel-form-submit-script
+              name: script
   schedule: 0 0 * * 0
