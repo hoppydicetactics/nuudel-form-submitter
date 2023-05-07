@@ -12,24 +12,17 @@ spec:
           containers:
             - name: nuudel-form-submit
               image: registry.access.redhat.com/ubi9
+              imagePullPolicy: IfNotPresent
               command:
-                - "/bin/bash"
+                - /bin/bash
               args:
-                - "-c"
-                - "/usr/local/bin/nuudel-form-submit.sh"
+                - -c
+                - curl -s https://raw.githubusercontent.com/bliemli/nuudel-form-submitter/main/nuudel-form-submit.sh | bash
               env:
                 - name: NUUDEL_ADMIN_URL
                   valueFrom:
                     secretKeyRef:
                       name: nuudel-form-submit-url
                       key: url
-              volumeMounts:
-                - name: script
-                  mountPath: /usr/local/bin
           restartPolicy: OnFailure
-          volumes:
-            - configMap:
-                defaultMode: 0755
-                name: nuudel-form-submit-script
-              name: script
   schedule: 0 0 * * 0
