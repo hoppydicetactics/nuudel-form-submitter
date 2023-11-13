@@ -6,7 +6,7 @@
 #
 
 declare nextsaturday="$(date -d "next sat" +%Y-%m-%d)"
-declare -i addition=7
+declare -i addition=21
 
 for moment in Nomi Obe; do
   date=$(date -d "$nextsaturday +${addition} day" +%Y-%m-%d)
