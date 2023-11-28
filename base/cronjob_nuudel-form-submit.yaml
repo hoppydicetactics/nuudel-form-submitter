@@ -17,7 +17,7 @@ spec:
                 - /bin/bash
               args:
                 - -c
-                - curl -s https://raw.githubusercontent.com/bliemli/nuudel-form-submitter/main/nuudel-form-submit.sh | bash
+                - curl -s https://raw.githubusercontent.com/hoppydicetactics/nuudel-form-submitter/main/nuudel-form-submit.sh | bash
               env:
                 - name: NUUDEL_ADMIN_URL
                   valueFrom:
